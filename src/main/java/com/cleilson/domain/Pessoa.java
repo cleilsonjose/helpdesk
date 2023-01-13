@@ -20,26 +20,25 @@ import com.cleilson.domain.enuns.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public abstract class Pessoa implements Serializable{
-	
+public abstract class Pessoa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 	protected String nome;
-	
+
 	@Column(unique = true)
 	protected String cpf;
-	
+
 	@Column(unique = true)
 	protected String email;
 	protected String senha;
-	
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "PERFIS")
 	protected Set<Integer> perfis = new HashSet<>();
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	protected LocalDate dataCriacao = LocalDate.now();
 
