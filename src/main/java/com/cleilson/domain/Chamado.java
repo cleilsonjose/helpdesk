@@ -1,22 +1,47 @@
 package com.cleilson.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import com.cleilson.domain.enuns.Prioridade;
 import com.cleilson.domain.enuns.Status;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class Chamado {
+@Entity
+public class Chamado implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataDeAbertura = LocalDate.now();
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataDeFechamento;
+	
+	
 	private Prioridade prioridade;
 	private Status status;
 	private String titulo;
 	private String observações;
 	
+	@ManyToOne
+	@JoinColumn(name ="tecnico_id")
 	private Cliente cliente;
+	
+	@ManyToOne
+	@JoinColumn(name ="cliente_id")
 	private Tecnico tecnico;
 	
 	public Chamado() {
