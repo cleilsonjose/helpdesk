@@ -10,7 +10,7 @@ import com.cleilson.domain.Tecnico;
 import com.cleilson.domain.enuns.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class TecnicosDTO implements Serializable {
+public class TecnicoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,11 +24,11 @@ public class TecnicosDTO implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	protected LocalDate dataCriacao = LocalDate.now();
 
-	public TecnicosDTO() {
+	public TecnicoDTO() {
 		super();
 	}
 
-	public TecnicosDTO(Tecnico obj) {
+	public TecnicoDTO(Tecnico obj) {
 		super();
 		this.id = obj.getId();
 		this.nome = obj.getNome();
