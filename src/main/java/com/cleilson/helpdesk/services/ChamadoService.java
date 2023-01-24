@@ -1,7 +1,10 @@
 package com.cleilson.helpdesk.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +40,13 @@ public class ChamadoService {
 	public Chamado create(ChamadoDTO obj) {
 		return repository.save(newChamado(obj));
 	}
+	
+	public Chamado update(Integer id, @Valid ChamadoDTO objDTO) {
+		objDTO.setId(id);
+		Chamado oldObj = findById(id);
+		oldObj = newChamado(objDTO);
+		return repository.save(oldObj);
+	}
 
 	private Chamado newChamado(ChamadoDTO obj) {
 		Tecnico tecnico = tecnicoService.findById(obj.getTecnico());
@@ -45,6 +55,10 @@ public class ChamadoService {
 		Chamado chamado = new Chamado();
 		if(obj.getId() != null) {
 			chamado.setId(obj.getId());
+		}
+		
+		if (obj.getStatus().equals(2)) {
+			chamado.setDataFechamento(LocalDate.now());
 		}
 
 		chamado.setTecnico(tecnico);
@@ -55,4 +69,6 @@ public class ChamadoService {
 		chamado.setObservacoes(obj.getObservacoes());
 		return chamado;
 	}
+
+	
 }
